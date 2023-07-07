@@ -28,7 +28,7 @@ paths:
                     x-stoplight:
                       id: deny3s64fmo37
                   expiresIn:
-                    type: string
+                    type: integer
                     x-stoplight:
                       id: a054se8dlz3d5
                   email:
@@ -171,6 +171,53 @@ paths:
       tags:
         - ユーザー情報
     parameters: []
+  /login:
+    post:
+      summary: ''
+      operationId: post-login
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  idToken:
+                    type: string
+                    x-stoplight:
+                      id: h0s73dqkl9el1
+                  refreshToken:
+                    type: string
+                    x-stoplight:
+                      id: d0oml226wnmu3
+                  expiresIn:
+                    type: integer
+                    x-stoplight:
+                      id: 08vla2qs7eklo
+                  email:
+                    type: string
+                    x-stoplight:
+                      id: lgrze4io69wh5
+      tags:
+        - ユーザー情報
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  x-stoplight:
+                    id: ef99gbd2lic0t
+                email:
+                  type: string
+                  x-stoplight:
+                    id: 1mch8gn3zh9dr
+                  format: email
+        description: ''
+      description: ''
 components:
   schemas:
     User:
