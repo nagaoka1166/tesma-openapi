@@ -1,0 +1,245 @@
+openapi: 3.1.0
+x-stoplight:
+  id: b02cv95ew8lae
+info:
+  title: api
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/v1'
+paths:
+  /signup:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  idToken:
+                    type: string
+                    x-stoplight:
+                      id: hzhbkn9x69v8y
+                  refreshToken:
+                    type: string
+                    x-stoplight:
+                      id: deny3s64fmo37
+                  expiresIn:
+                    type: string
+                    x-stoplight:
+                      id: a054se8dlz3d5
+                  email:
+                    type: string
+                    x-stoplight:
+                      id: ybphe96ka87qn
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  x-stoplight:
+                    id: f8fcdly6khk8c
+              required:
+                - email
+                - password
+            examples:
+              Create User Bob Fellow:
+                value:
+                  firstName: Bob
+                  lastName: Fellow
+                  email: bob.fellow@gmail.com
+                  dateOfBirth: '1996-08-24'
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+      x-internal: false
+      tags:
+        - ユーザー情報
+    parameters: []
+  /refresh_token:
+    post:
+      summary: ''
+      operationId: post-refresh_token
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refresh_token:
+                    type: string
+                    x-stoplight:
+                      id: 6ukbh883wz142
+                  idToken:
+                    type: string
+                    x-stoplight:
+                      id: ppx3tzc45vb0d
+                  expiresIn:
+                    type: string
+                    x-stoplight:
+                      id: ts0iten2b9qjh
+                required:
+                  - refresh_token
+                  - idToken
+                  - expiresIn
+      description: idTokenを取得
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  x-stoplight:
+                    id: ah334hbyov5re
+              required:
+                - refresh_token
+  /user/information:
+    put:
+      summary: put-user-information
+      operationId: put-user-nformation
+      responses:
+        '201':
+          description: Created
+          headers:
+            header-0:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  x-stoplight:
+                    id: cw2t49irenl5q
+                lastName:
+                  type: string
+                  x-stoplight:
+                    id: za20xkad5c4f7
+                firstNameKana:
+                  type: string
+                  x-stoplight:
+                    id: 96qdj5qlzeq5x
+                lastNameKana:
+                  type: string
+                  x-stoplight:
+                    id: p1u2raaltorh3
+                birthDate:
+                  type: string
+                  x-stoplight:
+                    id: ilr0inhiq8638
+                  format: date
+                faculty:
+                  $ref: '#/components/schemas/Faculty'
+                  x-stoplight:
+                    id: txdrhpy27los5
+                grade:
+                  x-stoplight:
+                    id: 44x4oqh4ikafp
+                  type: integer
+              required:
+                - firstName
+                - lastName
+                - firstNameKana
+                - lastNameKana
+                - birthDate
+                - faculty
+                - grade
+      tags:
+        - ユーザー情報
+    parameters: []
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      x-stoplight:
+        id: a3lizesgzq612
+      x-tags:
+        - ユーザー情報
+      properties:
+        firstName:
+          type: string
+          x-stoplight:
+            id: 0hsbrb9jnk58f
+        lastName:
+          type: string
+          x-stoplight:
+            id: 55ohxoz7jf6hq
+        firstNameKana:
+          type: string
+          x-stoplight:
+            id: 6ki6odd9qyznu
+        lastNameKana:
+          type: string
+          x-stoplight:
+            id: da432p935vq8t
+        email:
+          type: string
+          format: email
+          x-stoplight:
+            id: 3u31r7advx0cl
+        birthDate:
+          type: string
+          format: date
+          example: '1997-10-31'
+          x-stoplight:
+            id: 3nuzi525yxbom
+      required:
+        - firstName
+        - lastName
+        - firstNameKana
+        - lastNameKana
+        - email
+        - birthDate
+    Faculty:
+      title: Faculty
+      x-stoplight:
+        id: oxbfshzop8n8r
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2jj9xj8jb7yms
+        name:
+          type: string
+          x-stoplight:
+            id: x63kw1rjvz33c
+        order:
+          type: integer
+          x-stoplight:
+            id: na8lsiglmcm9u
+      x-tags:
+        - ユーザー情報
