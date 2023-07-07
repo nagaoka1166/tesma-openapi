@@ -7,90 +7,6 @@ info:
 servers:
   - url: 'http://localhost:3000/v1'
 paths:
-  '/users/{userId}':
-    parameters:
-      - schema:
-          type: integer
-        name: userId
-        in: path
-        required: true
-        description: Id of an existing user.
-    get:
-      summary: Get User Info by User ID
-      tags: []
-      responses:
-        '200':
-          description: User Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Get User Alice Smith:
-                  value:
-                    id: 142
-                    firstName: Alice
-                    lastName: Smith
-                    email: alice.smith@gmail.com
-                    dateOfBirth: '1997-10-31'
-                    emailVerified: true
-                    signUpDate: '2019-08-24'
-        '404':
-          description: User Not Found
-      operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
-    patch:
-      summary: Update User Information
-      operationId: patch-users-userId
-      responses:
-        '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples:
-                Updated User Rebecca Baker:
-                  value:
-                    id: 13
-                    firstName: Rebecca
-                    lastName: Baker
-                    email: rebecca@gmail.com
-                    dateOfBirth: '1985-10-02'
-                    emailVerified: false
-                    createDate: '2019-08-24'
-        '404':
-          description: User Not Found
-        '409':
-          description: Email Already Taken
-      description: Update the information of an existing user.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                firstName:
-                  type: string
-                lastName:
-                  type: string
-                email:
-                  type: string
-                  description: 'If a new email is given, the user''s email verified property will be set to false.'
-                dateOfBirth:
-                  type: string
-            examples:
-              Update First Name:
-                value:
-                  firstName: Rebecca
-              Update Email:
-                value:
-                  email: rebecca@gmail.com
-              Update Last Name & Date of Birth:
-                value:
-                  lastName: Baker
-                  dateOfBirth: '1985-10-02'
-        description: Patch user properties to update.
   /signup:
     post:
       summary: Create New User
@@ -153,17 +69,108 @@ paths:
         - ユーザー情報
     parameters: []
   /refresh_token:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-refresh_token
     post:
       summary: ''
       operationId: post-refresh_token
       responses:
         '201':
           description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  refresh_token:
+                    type: string
+                    x-stoplight:
+                      id: 6ukbh883wz142
+                  idToken:
+                    type: string
+                    x-stoplight:
+                      id: ppx3tzc45vb0d
+                  expiresIn:
+                    type: string
+                    x-stoplight:
+                      id: ts0iten2b9qjh
+                required:
+                  - refresh_token
+                  - idToken
+                  - expiresIn
+      description: idTokenを取得
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+                  x-stoplight:
+                    id: ah334hbyov5re
+              required:
+                - refresh_token
+  /user/information:
+    put:
+      summary: put-user-information
+      operationId: put-user-nformation
+      responses:
+        '201':
+          description: Created
+          headers:
+            header-0:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  x-stoplight:
+                    id: cw2t49irenl5q
+                lastName:
+                  type: string
+                  x-stoplight:
+                    id: za20xkad5c4f7
+                firstNameKana:
+                  type: string
+                  x-stoplight:
+                    id: 96qdj5qlzeq5x
+                lastNameKana:
+                  type: string
+                  x-stoplight:
+                    id: p1u2raaltorh3
+                birthDate:
+                  type: string
+                  x-stoplight:
+                    id: ilr0inhiq8638
+                  format: date
+                faculty:
+                  $ref: '#/components/schemas/Faculty'
+                  x-stoplight:
+                    id: txdrhpy27los5
+                grade:
+                  x-stoplight:
+                    id: 44x4oqh4ikafp
+                  type: integer
+              required:
+                - firstName
+                - lastName
+                - firstNameKana
+                - lastNameKana
+                - birthDate
+                - faculty
+                - grade
+      tags:
+        - ユーザー情報
+    parameters: []
 components:
   schemas:
     User:
@@ -179,6 +186,8 @@ components:
           signUpDate: '2019-08-24'
       x-stoplight:
         id: a3lizesgzq612
+      x-tags:
+        - ユーザー情報
       properties:
         firstName:
           type: string
@@ -214,3 +223,23 @@ components:
         - lastNameKana
         - email
         - birthDate
+    Faculty:
+      title: Faculty
+      x-stoplight:
+        id: oxbfshzop8n8r
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 2jj9xj8jb7yms
+        name:
+          type: string
+          x-stoplight:
+            id: x63kw1rjvz33c
+        order:
+          type: integer
+          x-stoplight:
+            id: na8lsiglmcm9u
+      x-tags:
+        - ユーザー情報
