@@ -156,10 +156,6 @@ paths:
                   $ref: '#/components/schemas/Faculty'
                   x-stoplight:
                     id: txdrhpy27los5
-                grade:
-                  x-stoplight:
-                    id: 44x4oqh4ikafp
-                  type: integer
               required:
                 - firstName
                 - lastName
@@ -167,7 +163,6 @@ paths:
                 - lastNameKana
                 - birthDate
                 - faculty
-                - grade
       tags:
         - ユーザー情報
     parameters: []
@@ -218,6 +213,62 @@ paths:
                   format: email
         description: ''
       description: ''
+  /user/reseacher:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-user-reseacher
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Researcher'
+      requestBody:
+        content: {}
+        description: ''
+  /user/student:
+    post:
+      summary: ''
+      operationId: post-user-student
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+      tags:
+        - 学生
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                age:
+                  type: integer
+                  x-stoplight:
+                    id: u8y2a2yqgnbrd
+                sex:
+                  type: integer
+                  x-stoplight:
+                    id: ahffh40v9kfqw
+                grade:
+                  type: integer
+                  x-stoplight:
+                    id: j4mu7y7n6z04f
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      description: ''
 components:
   schemas:
     User:
@@ -263,6 +314,10 @@ components:
           example: '1997-10-31'
           x-stoplight:
             id: 3nuzi525yxbom
+        faculty_id:
+          $ref: '#/components/schemas/Faculty'
+          x-stoplight:
+            id: jwyu1uyti3vlu
       required:
         - firstName
         - lastName
@@ -270,11 +325,14 @@ components:
         - lastNameKana
         - email
         - birthDate
+        - faculty_id
     Faculty:
       title: Faculty
       x-stoplight:
         id: oxbfshzop8n8r
       type: object
+      x-tags:
+        - ユーザー情報
       properties:
         id:
           type: string
@@ -288,5 +346,35 @@ components:
           type: integer
           x-stoplight:
             id: na8lsiglmcm9u
-      x-tags:
-        - ユーザー情報
+    Student:
+      title: Student
+      x-stoplight:
+        id: v1i0mbx5lk69j
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/User'
+          x-stoplight:
+            id: exw0k0o47ijhz
+        id:
+          type: string
+          x-stoplight:
+            id: 2ymkwwbywho48
+        grade:
+          type: integer
+          x-stoplight:
+            id: qipdkp1g54o2l
+        sex:
+          type: integer
+          x-stoplight:
+            id: 9gfdcvv9d9xca
+    Researcher:
+      title: Researcher
+      x-stoplight:
+        id: lcwmq0pffgl5l
+      type: object
+      properties:
+        userId:
+          $ref: '#/components/schemas/User'
+          x-stoplight:
+            id: ohya27tvwme2j
