@@ -230,6 +230,70 @@ paths:
       requestBody:
         content: {}
         description: ''
+  /recruits:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-recuruit
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recruit'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Recruit:
+                  $ref: '#/components/schemas/Recruit'
+                  x-stoplight:
+                    id: lx8iyrkfkriva
+        description: ''
+      x-extension-1: null
+      description: ''
+      tags:
+        - 投稿
+    get:
+      summary: ''
+      operationId: get-recruits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recruit'
+      tags:
+        - 投稿
+    delete:
+      summary: ''
+      operationId: delete-recruits
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - 投稿
+    put:
+      summary: ''
+      operationId: put-recruits
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recruit'
+      tags:
+        - 投稿
   /user/students:
     post:
       summary: ''
@@ -272,6 +336,63 @@ paths:
         description: ''
       description: ''
     parameters: []
+  /recruit/appointment:
+    post:
+      summary: ''
+      operationId: post-recruit-appointment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+      description: ''
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruit_id:
+                  $ref: '#/components/schemas/Recruit'
+                  x-stoplight:
+                    id: uha352jnf61s3
+                student_id:
+                  $ref: '#/components/schemas/Student'
+                  x-stoplight:
+                    id: ecx4wms6ddi0p
+      tags:
+        - 面談申し込み
+    put:
+      summary: ''
+      operationId: put-recruit-appointment
+                type: object
+                properties:
+                  status:
+                    x-stoplight:
+                      id: zh8cj5wfxy4pr
+                    enum:
+                      - pending
+                      - completed
+                      - canceled
+                  responded_at:
+                    type: string
+                    x-stoplight:
+                      id: nog0lae030eqa
+                    format: date-time
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  x-stoplight:
+                    id: 8ozu5put0717n
+      tags:
+        - 面談申し込み
   /recruits:
     parameters: []
     post:
@@ -288,12 +409,6 @@ paths:
               schema:
                 type: object
                 properties: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
                 Recruit:
                   $ref: '#/components/schemas/Recruit'
                   x-stoplight:
@@ -323,6 +438,78 @@ paths:
         '204':
           description: No Content
       description: ' Successfully delete recruit'
+  '/user/MessageRoom{MessageRoomId}':
+    get:
+      summary: Your GET endpoint
+      tags:
+        - メッセージルーム取得
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageRoom'
+      operationId: get-MessageRoom
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    parameters:
+      - schema:
+          type: string
+        name: MessageRoomId
+        in: path
+        required: true
+  /users/messages:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - メッセージ
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Message'
+      operationId: get-users-messages
+                content:
+                  type: string
+                  x-stoplight:
+                    id: bzx79fpoadhlb
+                roomId:
+                  $ref: '#/components/schemas/User'
+                  x-stoplight:
+                    id: nn5x7nq8b1f1i
+    post:
+      summary: ''
+      operationId: post-users-messages
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roomID:
+                  type: integer
+                  x-stoplight:
+                    id: fv12aweczci11
+                content:
+                  type: string
+                  x-stoplight:
+                    id: sbci3ou5vq6dd
+      tags:
+        - メッセージ
   /recruit/likes:
     get:
       summary: Your GET endpoint
@@ -348,12 +535,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Like'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
                 Recruit:
                   $ref: '#/components/schemas/Recruit'
                   x-stoplight:
@@ -372,6 +553,12 @@ paths:
           description: No Content
       tags:
         - いいね
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
   /faculties:
     get:
       summary: Your GET endpoint
@@ -469,7 +656,7 @@ components:
         id: v1i0mbx5lk69j
       type: object
       properties:
-        userId:
+        user_Id:
           $ref: '#/components/schemas/User'
           x-stoplight:
             id: exw0k0o47ijhz
@@ -546,10 +733,109 @@ components:
           x-stoplight:
             id: cnrascea2yrdh
           format: date
-        Researcher:
+        researcher_id:
           $ref: '#/components/schemas/Researcher'
           x-stoplight:
             id: d0rcr0a247lf8
+    Appointment:
+      title: Appointment
+      x-stoplight:
+        id: gjrt1ogcrq47w
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: rvfbcn2ac1f0t
+        student_id:
+          $ref: '#/components/schemas/Student'
+          x-stoplight:
+            id: yidxwgg6rol1g
+        reseatcher_id:
+          $ref: '#/components/schemas/Researcher'
+          x-stoplight:
+            id: f8fhv6j67oudy
+        status:
+          x-stoplight:
+            id: ltamgh4egbjcs
+          enum:
+            - pending
+            - completed
+            - canceled
+        responded_at:
+          type: string
+          x-stoplight:
+            id: tmio75ya9uvtb
+          format: date-time
+        Recruit:
+          $ref: '#/components/schemas/Recruit'
+          x-stoplight:
+            id: a18s2ac53rt5q
+    MessageRoom:
+      title: MessageRoom
+      x-stoplight:
+        id: ln6kfnw9rvlil
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: bi2ll7uj2jdjw
+        student_id:
+          $ref: '#/components/schemas/Student'
+          x-stoplight:
+            id: iajyovf6px25u
+        researcher_id:
+          $ref: '#/components/schemas/Researcher'
+          x-stoplight:
+            id: kyr0qq3l64d72
+        title:
+          type: string
+          x-stoplight:
+            id: qy2ykza44w652
+        recruit_id:
+          $ref: '#/components/schemas/Recruit'
+          x-stoplight:
+            id: xg72hznwk3wg1
+    Message:
+      title: Message
+      x-stoplight:
+        id: gr9egxhw3dopg
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 1paay4linfy6g
+        sender_id:
+          type: integer
+          x-stoplight:
+            id: 2i7cebmg88jsp
+        content:
+          type: string
+          x-stoplight:
+            id: d8bpi1m2nsxiu
+      description: ''
+      x-tags:
+        - メッセージ
+    RecuruitHistory:
+      title: RecruitHistory
+      x-stoplight:
+        id: weecg6b5xkibm
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 8dk2a7n64vslr
+        student_id:
+          $ref: '#/components/schemas/Student'
+          x-stoplight:
+            id: r4oq6siti5ho7
+        recruit_id:
+          $ref: '#/components/schemas/Recruit'
+          x-stoplight:
+            id: l5qr7wjy5d11k
     Like:
       title: Like
       x-stoplight:
