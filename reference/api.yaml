@@ -367,12 +367,6 @@ paths:
     put:
       summary: ''
       operationId: put-recruit-appointment
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
                 type: object
                 properties:
                   status:
@@ -399,6 +393,51 @@ paths:
                     id: 8ozu5put0717n
       tags:
         - 面談申し込み
+  /recruits:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-recruit
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recruit'
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+                Recruit:
+                  $ref: '#/components/schemas/Recruit'
+                  x-stoplight:
+                    id: lx8iyrkfkriva
+        description: ''
+      x-extension-1: null
+      description: ' Successfully create recruit'
+      tags:
+        - 投稿
+    get:
+      summary: ''
+      operationId: get-recruits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recruit'
+      tags:
+        - 投稿
+      description: ' Successfully get recruit'
+    delete:
+      summary: ''
+      operationId: delete-recruits
+      responses:
+        '204':
+          description: No Content
+      description: ' Successfully delete recruit'
   '/user/MessageRoom{MessageRoomId}':
     get:
       summary: Your GET endpoint
@@ -441,12 +480,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Message'
       operationId: get-users-messages
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
                 content:
                   type: string
                   x-stoplight:
@@ -477,6 +510,68 @@ paths:
                     id: sbci3ou5vq6dd
       tags:
         - メッセージ
+  /recruit/likes:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - 投稿
+        - いいね
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+      operationId: get-recruit-likes
+      description: ' Successfully deleted like '
+    post:
+      summary: ''
+      operationId: post-recruit-likes
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Like'
+                Recruit:
+                  $ref: '#/components/schemas/Recruit'
+                  x-stoplight:
+                    id: m5ctd6hrl32iq
+                Researcher:
+                  $ref: '#/components/schemas/Researcher'
+                  x-stoplight:
+                    id: 2xh4jnxmqh8dg
+      tags:
+        - いいね
+    delete:
+      summary: ''
+      operationId: delete-recruit-likes
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - いいね
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+  /faculties:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Faculty'
+      operationId: get-faculties
+      description: get faculties
 components:
   schemas:
     User:
@@ -534,6 +629,7 @@ components:
         - email
         - birthDate
         - faculty_id
+      description: ''
     Faculty:
       title: Faculty
       x-stoplight:
@@ -740,3 +836,21 @@ components:
           $ref: '#/components/schemas/Recruit'
           x-stoplight:
             id: l5qr7wjy5d11k
+    Like:
+      title: Like
+      x-stoplight:
+        id: w5bde62olcz6s
+      type: object
+      properties:
+        Student:
+          $ref: '#/components/schemas/Student'
+          x-stoplight:
+            id: nxp4o6f45vaiv
+        Recruit:
+          $ref: '#/components/schemas/Recruit'
+          x-stoplight:
+            id: ync4biv89tlpi
+        id:
+          type: string
+          x-stoplight:
+            id: 0wyu91zuw1k7p
