@@ -448,6 +448,23 @@ paths:
                     id: 8ozu5put0717n
       tags:
         - 面談申し込み
+  /recruit/recruit_status_types:
+    parameters: []
+    patch:
+      summary: ''
+      operationId: patch-recruit-recruit_status_types
+      responses:
+        '200':
+          description: OK
+      x-stoplight:
+        id: 1riz6d74co3rb
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecruitStatusType'
+      tags:
+        - 投稿のステータスを変更
   '/user/MessageRoom{MessageRoomId}':
     get:
       summary: Your GET endpoint
@@ -703,6 +720,10 @@ components:
           $ref: '#/components/schemas/Researcher'
           x-stoplight:
             id: d0rcr0a247lf8
+        recruits_status_type_id:
+          $ref: '#/components/schemas/RecruitStatusType'
+          x-stoplight:
+            id: d82je5bf0ktbw
     Appointment:
       title: Appointment
       x-stoplight:
@@ -820,3 +841,12 @@ components:
           type: string
           x-stoplight:
             id: i9c9ht3lycfql
+    RecruitStatusType:
+      type: object
+      x-stoplight:
+        id: 021fa4d598b37
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 6vgx9umaxlrgs
